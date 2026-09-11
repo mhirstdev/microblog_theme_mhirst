@@ -1,0 +1,19 @@
+{{- /* Liefert den <title>-Text als String. */ -}}
+{{- $t := site.Title -}}
+{{- if not .IsHome -}}
+  {{- if eq .Kind "term" -}}
+    {{- $t = printf "#%s · %s" (lower .Title) site.Title -}}
+  {{- else if eq .Kind "taxonomy" -}}
+    {{- $t = printf "Kategorien · %s" site.Title -}}
+  {{- else if .Title -}}
+    {{- if ne .Title site.Title }}{{ $t = printf "%s · %s" .Title site.Title }}{{ end -}}
+  {{- else if in (slice "post" "reply") .Type -}}
+    {{- $s := .Summary | plainify | htmlUnescape | truncate 60 -}}
+    {{- with trim $s " \n\t" -}}
+      {{- $t = printf "%s · %s" . site.Title -}}
+    {{- else -}}
+      {{- $t = printf "Notiz vom %s · %s" (partial "semikolon/date.html" .Date) site.Title -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $t -}}

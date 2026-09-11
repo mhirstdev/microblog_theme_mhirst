@@ -1,0 +1,22 @@
+{{- /* Steckbrief als C#-Objektinitialisierer im Visual-Studio-Light-Look. Kontext: dict "status" */ -}}
+{{- $p := site.Params -}}
+{{- $enums := dict "available" "Open" "limited" "Limited" "booked" "Booked" -}}
+{{- $name := $p.author.name | default site.Title -}}
+{{- $stack := slice -}}
+{{- with $p.semikolon_stack }}{{ range split . "," }}{{ $t := trim . " " }}{{ if $t }}{{ $stack = $stack | append $t }}{{ end }}{{ end }}{{ end -}}
+<figure class="code-card">
+  <div class="code-card-tabs" aria-hidden="true"><span class="tab is-active">Freelancer.cs</span><span class="tab">Program.cs</span></div>
+  <pre aria-hidden="true"><code>
+    {{- /* Zeilen ohne Whitespace dazwischen, sonst entstehen Leerzeilen im <pre>. */ -}}
+    <span class="line"><span class="k">var</span> me = <span class="k">new</span> <span class="t">Freelancer</span></span>
+    {{- "" -}}<span class="line">{</span>
+    {{- "" -}}<span class="line">    Name   = <span class="s">"{{ $name }}"</span>,</span>
+    {{- with $p.semikolon_role -}}<span class="line">    Role   = <span class="s">"{{ . }}"</span>,</span>{{- end -}}
+    {{- with $stack -}}<span class="line">    Stack  = [{{ range $i, $s := . }}{{ if $i }}, {{ end }}<span class="s">"{{ $s }}"</span>{{ end }}],</span>{{- end -}}
+    {{- with .status -}}<span class="line">    Status = <span class="t">Availability</span>.{{ index $enums . }},{{ with $p.semikolon_status_note }}<span class="c"> // {{ . }}</span>{{ end }}</span>{{- end -}}
+    <span class="line">};</span>
+  {{- "" -}}</code></pre>
+  {{- with $stack }}
+  <figcaption class="visually-hidden">Tech-Stack: {{ delimit . ", " }}</figcaption>
+  {{- end }}
+</figure>

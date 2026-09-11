@@ -1,0 +1,5 @@
+name = "Semikolon"
+license = "MIT"
+description = "Helles, leicht nerdiges Micro.blog-Theme: Notizen auf der Startseite, Longreads auf einer eigenen Seite."
+tags = ["microblog", "blog", "light", "developer"]
+min_version = "0.91.0"

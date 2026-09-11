@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="{{ with site.Params.semikolon_lang }}{{ . }}{{ else }}de{{ end }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ block "title" . }}{{ partial "semikolon/page-title.html" . }}{{ end }}</title>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  {{ block "header" . }}{{ partial "header.html" . }}{{ end }}
+  <main id="main" class="container">
+    {{ block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{ if templates.Exists "partials/custom_footer.html" }}{{ partial "custom_footer.html" . }}{{ end }}
+  <script src="{{ "js/semikolon.js" | relURL }}?{{ site.Params.theme_seconds }}" defer></script>
+  {{ range site.Params.plugins_js }}
+  <script src="{{ . }}"></script>
+  {{ end }}
+</body>
+</html>

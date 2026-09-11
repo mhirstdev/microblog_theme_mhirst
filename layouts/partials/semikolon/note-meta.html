@@ -1,0 +1,7 @@
+<header class="note-meta">
+  <a class="u-url note-date" href="{{ .Permalink }}"><time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">{{ partial "semikolon/date.html" .Date }} <span class="note-time">{{ .Date.Format "15:04" }}</span></time></a>
+  <span class="note-hash" title="Kurz-Hash des Permalinks" aria-hidden="true">{{ substr (md5 .RelPermalink) 0 7 }}</span>
+  {{- with .GetTerms "categories" }}
+  <span class="tags">{{ range . }}<a class="p-category" href="{{ .RelPermalink }}">#{{ .LinkTitle | lower }}</a>{{ end }}</span>
+  {{- end }}
+</header>

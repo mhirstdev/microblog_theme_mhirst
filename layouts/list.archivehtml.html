@@ -1,0 +1,44 @@
+{{ define "title" }}Archiv · {{ site.Title }}{{ end }}
+{{ define "header" }}{{ partial "header.html" (dict "page" . "current" ("archive/" | relURL)) }}{{ end }}
+{{ define "main" }}
+{{- $posts := (partialCached "semikolon/posts.html" . "semikolon-posts").all -}}
+<section class="archive">
+  <header class="page-head">
+    <p class="section-label"><span aria-hidden="true">$</span> git log --oneline</p>
+    <h1 class="page-title">Archiv</h1>
+    <p class="page-intro">{{ len $posts }} Beiträge{{ range last 1 $posts }} seit {{ .Date.Format "2006" }}{{ end }}.</p>
+  </header>
+  {{- with site.GetPage "/categories" }}
+  {{- with .Pages }}
+  <nav aria-label="Kategorien">
+    <ul class="term-cloud">
+      {{- range . }}
+      <li><a href="{{ .RelPermalink }}">#{{ .Title | lower }} <span class="count">{{ len .Pages }}</span></a></li>
+      {{- end }}
+    </ul>
+  </nav>
+  {{- end }}
+  {{- end }}
+  {{- range $posts.GroupByDate "2006" }}
+  <section class="log-year" aria-labelledby="log-{{ .Key }}">
+    <h2 class="log-year-title" id="log-{{ .Key }}">{{ .Key }} <span class="count">{{ len .Pages }}</span></h2>
+    <ol class="log h-feed">
+      {{- range .Pages }}
+      <li class="log-line h-entry">
+        <span class="log-hash" aria-hidden="true">{{ substr (md5 .RelPermalink) 0 7 }}</span>
+        <time class="log-date dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">{{ partial "semikolon/date.html" .Date }}</time>
+        <a class="log-msg u-url" href="{{ .Permalink }}">
+          {{- if .Title -}}
+          <span class="p-name log-title">{{ .Title }}</span> <span class="badge">longread</span>
+          {{- else -}}
+          {{- $s := .Summary | plainify | htmlUnescape | truncate 90 -}}
+          {{- with trim $s " \n\t" }}{{ . }}{{ else }}[Foto]{{ end -}}
+          {{- end -}}
+        </a>
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+</section>
+{{ end }}

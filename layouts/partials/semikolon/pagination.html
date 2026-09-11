@@ -1,0 +1,16 @@
+{{- $pag := . -}}
+{{- if gt $pag.TotalPages 1 }}
+<nav class="pagination" aria-label="Seitennavigation">
+  {{- if $pag.HasPrev }}
+  <a class="pg-link" href="{{ $pag.Prev.URL }}" rel="prev">← neuer</a>
+  {{- else }}
+  <span class="pg-link is-disabled" aria-hidden="true">← neuer</span>
+  {{- end }}
+  <span class="pg-status">Seite {{ $pag.PageNumber }} / {{ $pag.TotalPages }}</span>
+  {{- if $pag.HasNext }}
+  <a class="pg-link" href="{{ $pag.Next.URL }}" rel="next">älter →</a>
+  {{- else }}
+  <span class="pg-link is-disabled" aria-hidden="true">älter →</span>
+  {{- end }}
+</nav>
+{{- end }}

@@ -1,0 +1,31 @@
+{{ define "main" }}
+{{- $posts := partialCached "semikolon/posts.html" . "semikolon-posts" -}}
+{{- $paginator := .Paginate $posts.notes -}}
+{{- if eq $paginator.PageNumber 1 }}
+{{ partial "semikolon/hero.html" . }}
+{{- range first 1 $posts.longreads }}
+<section class="featured" aria-labelledby="featured-label">
+  <h2 class="section-label" id="featured-label"><span aria-hidden="true">//</span> Neuester Longread</h2>
+  {{ partial "semikolon/longread-item.html" . }}
+</section>
+{{- end }}
+{{- end }}
+<section class="notes" aria-labelledby="notes-title">
+  <header class="section-head">
+    <h2 class="section-title" id="notes-title">Notizen</h2>
+    <a class="section-aside" href="{{ "feed.xml" | relURL }}">feed.xml</a>
+  </header>
+  <div class="timeline h-feed">
+    {{- range $paginator.Pages }}
+    {{ partial "semikolon/micropost.html" . }}
+    {{- else }}
+    <p class="empty">Noch keine Notizen. <code>Console.WriteLine("Hallo Welt");</code></p>
+    {{- end }}
+  </div>
+</section>
+{{- if site.Params.paginate_home }}
+{{ partial "semikolon/pagination.html" $paginator }}
+{{- else if gt (len $posts.notes) (len $paginator.Pages) }}
+<p class="more-link"><a href="{{ "archive/" | relURL }}">Ältere Beiträge im Archiv <span aria-hidden="true">→</span></a></p>
+{{- end }}
+{{ end }}

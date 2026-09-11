@@ -1,0 +1,17 @@
+{{ define "title" }}Fotos · {{ site.Title }}{{ end }}
+{{ define "header" }}{{ partial "header.html" (dict "page" . "current" ("photos/" | relURL)) }}{{ end }}
+{{ define "main" }}
+<section class="photos-page">
+  <header class="page-head">
+    <h1 class="page-title">Fotos</h1>
+  </header>
+  <div class="photo-grid">
+    {{- range (where site.RegularPages ".Params.photos" "!=" nil).ByDate.Reverse }}
+    {{- $page := . }}
+    {{- range first 1 .Params.photos }}
+    <a class="photo-tile" href="{{ $page.Permalink }}"><img src="{{ . }}" alt="Foto vom {{ partial "semikolon/date.html" $page.Date }}" loading="lazy" width="300" height="300"></a>
+    {{- end }}
+    {{- end }}
+  </div>
+</section>
+{{ end }}

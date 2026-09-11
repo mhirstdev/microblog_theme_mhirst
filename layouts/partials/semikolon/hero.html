@@ -1,0 +1,33 @@
+{{- $p := site.Params -}}
+{{- $lr := partialCached "semikolon/longreads-page.html" . "semikolon-lr" -}}
+{{- $labels := dict "available" "Verfügbar für Projekte" "limited" "Begrenzt verfügbar" "booked" "Aktuell ausgebucht" -}}
+{{- $status := "" -}}
+{{- with $p.semikolon_status }}{{ if index $labels . }}{{ $status = . }}{{ end }}{{ end -}}
+<section class="hero h-card" aria-labelledby="hero-name">
+  <div class="hero-head">
+    {{- with $p.author.avatar }}
+    <img class="hero-avatar u-photo" src="{{ . }}" alt="" width="72" height="72">
+    {{- end }}
+    <div class="hero-id">
+      <h1 class="hero-name p-name" id="hero-name">{{ with $p.author.name }}{{ . }}{{ else }}{{ site.Title }}{{ end }}</h1>
+      {{- with $p.semikolon_role }}
+      <p class="hero-role p-job-title">{{ . }}</p>
+      {{- end }}
+    </div>
+  </div>
+  {{- with $status }}
+  <p class="status status--{{ . }}"><span class="status-dot" aria-hidden="true"></span><span class="status-text">{{ index $labels . }}{{ with $p.semikolon_status_note }} <span class="status-note">· {{ . }}</span>{{ end }}</span></p>
+  {{- end }}
+  <div class="hero-intro p-note">
+    {{- with $p.semikolon_intro }}{{ . | markdownify }}{{ else }}{{ with $p.about_me }}{{ . | markdownify }}{{ else }}{{ with $p.description }}{{ . | safeHTML }}{{ end }}{{ end }}{{ end -}}
+  </div>
+  {{- if not $p.semikolon_hide_code_card }}
+  {{ partial "semikolon/code-card.html" (dict "status" $status) }}
+  {{- end }}
+  <div class="hero-actions">
+    {{- with $p.semikolon_contact_url }}
+    <a class="btn btn-primary" href="{{ . }}">{{ with $p.semikolon_contact_label }}{{ . }}{{ else }}Projekt anfragen{{ end }}</a>
+    {{- end }}
+    <a class="btn btn-ghost" href="{{ $lr.url }}">{{ $lr.title }} lesen <span aria-hidden="true">→</span></a>
+  </div>
+</section>

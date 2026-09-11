@@ -1,0 +1,25 @@
+{{ define "main" }}
+{{- $lrs := (partialCached "semikolon/posts.html" . "semikolon-posts").longreads -}}
+<section class="lr-page">
+  <header class="page-head">
+    <p class="section-label"><span aria-hidden="true">//</span> {{ len $lrs }} Artikel</p>
+    <h1 class="page-title">{{ .Title }}</h1>
+    <div class="page-intro">
+      {{- with site.Params.semikolon_longreads_intro }}{{ . | markdownify }}{{ else }}{{ .Content }}{{ end -}}
+    </div>
+  </header>
+  {{- range $lrs.GroupByDate "2006" }}
+  <section class="lr-year" aria-labelledby="year-{{ .Key }}">
+    <h2 class="lr-year-title" id="year-{{ .Key }}"><span class="pp" aria-hidden="true">#region</span> {{ .Key }}</h2>
+    <div class="lr-list h-feed">
+      {{- range .Pages }}
+      {{ partial "semikolon/longread-item.html" . }}
+      {{- end }}
+    </div>
+    <p class="lr-year-end" aria-hidden="true">#endregion</p>
+  </section>
+  {{- else }}
+  <p class="empty">Noch keine Longreads. Der erste Entwurf kompiliert gerade.</p>
+  {{- end }}
+</section>
+{{ end }}

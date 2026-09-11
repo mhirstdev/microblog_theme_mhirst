@@ -1,0 +1,6 @@
+{{- /* Findet die Longreads-Seite (content/longreads.md, type: longreads), damit URL und Titel frei änderbar bleiben. */ -}}
+{{- $r := dict "url" ("/longreads/" | relURL) "title" "Longreads" -}}
+{{- range first 1 (where site.RegularPages "Type" "longreads") -}}
+  {{- $r = dict "url" .RelPermalink "title" .Title -}}
+{{- end -}}
+{{- return $r -}}

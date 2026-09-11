@@ -1,0 +1,8 @@
+{{- /* Longreads-Liste in beliebigen Seiten/Posts: {{< longreads >}} oder {{< longreads limit="3" >}} */ -}}
+{{- $lrs := (partialCached "semikolon/posts.html" . "semikolon-posts").longreads -}}
+{{- with .Get "limit" }}{{ $lrs = first (int .) $lrs }}{{ end -}}
+<div class="lr-list lr-embed h-feed">
+  {{- range $lrs }}
+  {{ partial "semikolon/longread-item.html" . }}
+  {{- end }}
+</div>

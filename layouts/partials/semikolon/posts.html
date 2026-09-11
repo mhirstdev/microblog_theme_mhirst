@@ -1,0 +1,8 @@
+{{- /*
+  Zentrale Aufteilung der Micro.blog-Posts:
+  - notes:     Posts ohne Titel (Microposts) -> Startseite
+  - longreads: Posts mit Titel               -> Longreads-Seite
+  Aufruf: partialCached "semikolon/posts.html" . "semikolon-posts"
+*/ -}}
+{{- $all := (where site.RegularPages "Type" "post").ByDate.Reverse -}}
+{{- return dict "all" $all "notes" (where $all "Title" "") "longreads" (where $all "Title" "!=" "") -}}

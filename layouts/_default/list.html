@@ -1,0 +1,31 @@
+{{ define "main" }}
+<section class="list-page">
+  <header class="page-head">
+    {{- if eq .Kind "term" }}
+    <p class="section-label"><span aria-hidden="true">//</span> Kategorie</p>
+    <h1 class="page-title">#{{ .Title | lower }}</h1>
+    {{- else }}
+    <h1 class="page-title">{{ if eq .Kind "taxonomy" }}Kategorien{{ else }}{{ .Title }}{{ end }}</h1>
+    {{- end }}
+    {{- with .Content }}
+    <div class="page-intro">{{ . }}</div>
+    {{- end }}
+  </header>
+  {{- if eq .Kind "taxonomy" }}
+  <ul class="term-cloud">
+    {{- range .Pages }}
+    <li><a href="{{ .RelPermalink }}">#{{ .Title | lower }} <span class="count">{{ len .Pages }}</span></a></li>
+    {{- end }}
+  </ul>
+  {{- else }}
+  {{- $posts := (where .Pages "Type" "post").ByDate.Reverse }}
+  {{- if site.Params.paginate_categories }}
+  {{- $pag := .Paginate $posts }}
+  {{ partial "semikolon/mixed-list.html" $pag.Pages }}
+  {{ partial "semikolon/pagination.html" $pag }}
+  {{- else }}
+  {{ partial "semikolon/mixed-list.html" $posts }}
+  {{- end }}
+  {{- end }}
+</section>
+{{ end }}

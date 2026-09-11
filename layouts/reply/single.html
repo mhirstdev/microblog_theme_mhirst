@@ -1,0 +1,7 @@
+{{ define "main" }}
+<div class="single-note">
+  {{ partial "semikolon/micropost.html" . }}
+</div>
+{{ partial "semikolon/conversation.html" . }}
+<p class="back-link"><a href="{{ "/" | relURL }}">← Startseite</a></p>
+{{ end }}

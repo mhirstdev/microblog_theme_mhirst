@@ -1,0 +1,32 @@
+{{- $lr := partialCached "semikolon/longreads-page.html" . "semikolon-lr" -}}
+<div class="read-progress" aria-hidden="true"></div>
+<article class="longread h-entry">
+  <header class="longread-header">
+    <p class="breadcrumb"><a href="{{ $lr.url }}">{{ $lr.title }}</a> <span aria-hidden="true">/</span> {{ .Date.Format "2006" }}</p>
+    <h1 class="longread-title p-name">{{ .Title }}</h1>
+    <p class="longread-meta">
+      <a class="u-url" href="{{ .Permalink }}"><time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">{{ partial "semikolon/date.html" .Date }}</time></a>
+      <span>{{ .ReadingTime }} min Lesezeit</span>
+      <span>{{ .WordCount }} Wörter</span>
+      {{- with .GetTerms "categories" }}
+      <span class="tags">{{ range . }}<a class="p-category" href="{{ .RelPermalink }}">#{{ .LinkTitle | lower }}</a>{{ end }}</span>
+      {{- end }}
+    </p>
+  </header>
+  {{- $toc := .TableOfContents }}
+  {{- if and (gt .WordCount 400) (ge (len (findRE "<li>" $toc)) 3) }}
+  <details class="toc">
+    <summary>Inhalt</summary>
+    {{ $toc }}
+  </details>
+  {{- end }}
+  <div class="e-content prose">
+    {{ .Content }}
+  </div>
+  {{ if templates.Exists "partials/microblog_syndication.html" }}{{ partial "microblog_syndication.html" . }}{{ end }}
+  <footer class="longread-footer">
+    {{ partial "semikolon/author-card.html" . }}
+  </footer>
+</article>
+{{ partial "semikolon/conversation.html" . }}
+{{ partial "semikolon/longread-pager.html" . }}

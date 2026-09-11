@@ -1,0 +1,28 @@
+{{- $p := site.Params -}}
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-meta">
+      <p class="footer-build"><span class="footer-ok" aria-hidden="true">✔</span> Build erfolgreich · 0 Warnungen · 0 Fehler</p>
+      <p>© {{ now.Year }} {{ with $p.author.name }}{{ . }}{{ else }}{{ site.Title }}{{ end }}</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="{{ "feed.xml" | relURL }}">RSS</a></li>
+      <li><a href="{{ "feed.json" | relURL }}">JSON Feed</a></li>
+      {{- with $p.author.username }}
+      <li><a href="https://micro.blog/{{ . }}" rel="me">Micro.blog</a></li>
+      {{- end }}
+      {{- with $p.github_username }}
+      <li><a href="https://github.com/{{ . }}" rel="me">GitHub</a></li>
+      {{- end }}
+      {{- with $p.semikolon_linkedin_url }}
+      <li><a href="{{ . }}" rel="me">LinkedIn</a></li>
+      {{- end }}
+      {{- with $p.semikolon_imprint_url }}
+      <li><a href="{{ . }}">Impressum</a></li>
+      {{- end }}
+      {{- with $p.semikolon_privacy_url }}
+      <li><a href="{{ . }}">Datenschutz</a></li>
+      {{- end }}
+    </ul>
+  </div>
+</footer>

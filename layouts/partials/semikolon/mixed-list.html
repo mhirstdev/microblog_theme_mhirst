@@ -1,0 +1,5 @@
+<div class="timeline h-feed">
+  {{- range . }}
+  {{- if .Title }}{{ partial "semikolon/longread-item.html" . }}{{ else }}{{ partial "semikolon/micropost.html" . }}{{ end }}
+  {{- end }}
+</div>

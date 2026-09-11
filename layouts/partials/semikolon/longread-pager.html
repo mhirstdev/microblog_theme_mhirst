@@ -1,0 +1,25 @@
+{{- /* Vorheriger/nächster Longread. Liste ist neueste zuerst sortiert. */ -}}
+{{- $lrs := (partialCached "semikolon/posts.html" . "semikolon-posts").longreads -}}
+{{- $newer := false -}}
+{{- $older := false -}}
+{{- $found := false -}}
+{{- range $lrs -}}
+  {{- if $found -}}
+    {{- if not $older }}{{ $older = . }}{{ end -}}
+  {{- else if eq .RelPermalink $.RelPermalink -}}
+    {{- $found = true -}}
+  {{- else -}}
+    {{- $newer = . -}}
+  {{- end -}}
+{{- end -}}
+{{- if not $found }}{{ $newer = false }}{{ end -}}
+{{- if or $newer $older }}
+<nav class="lr-pager" aria-label="Weitere Longreads">
+  {{- with $older }}
+  <a class="lr-pager-link lr-pager-older" href="{{ .RelPermalink }}" rel="prev"><span class="lr-pager-dir">← älter</span><span class="lr-pager-title">{{ .Title }}</span></a>
+  {{- end }}
+  {{- with $newer }}
+  <a class="lr-pager-link lr-pager-newer" href="{{ .RelPermalink }}" rel="next"><span class="lr-pager-dir">neuer →</span><span class="lr-pager-title">{{ .Title }}</span></a>
+  {{- end }}
+</nav>
+{{- end }}

@@ -1,0 +1,68 @@
+{
+	"version": "1.0.0",
+	"title": "Semikolon",
+	"description": "Helles, leicht nerdiges Theme für Freelancer aus der .NET-Welt: Notizen auf der Startseite, Longreads auf einer eigenen Seite, Code-Steckbrief und Verfügbarkeitsstatus.",
+	"fields": [
+		{
+			"field": "params.semikolon_role",
+			"label": "Rolle (erscheint unter deinem Namen)",
+			"placeholder": "Freelance C# / .NET Entwickler"
+		},
+		{
+			"field": "params.semikolon_intro",
+			"label": "Intro-Text auf der Startseite",
+			"type": "markdown"
+		},
+		{
+			"field": "params.semikolon_stack",
+			"label": "Tech-Stack, kommagetrennt",
+			"placeholder": "C#, .NET 10, ASP.NET Core, EF Core, Azure"
+		},
+		{
+			"field": "params.semikolon_status",
+			"label": "Verfügbarkeit (hidden, available, limited, booked)",
+			"type": "select",
+			"options": ["hidden", "available", "limited", "booked"]
+		},
+		{
+			"field": "params.semikolon_status_note",
+			"label": "Hinweis zur Verfügbarkeit",
+			"placeholder": "ab November 2026"
+		},
+		{
+			"field": "params.semikolon_contact_url",
+			"label": "Kontakt-Link (mailto: oder URL)",
+			"placeholder": "mailto:hallo@example.com"
+		},
+		{
+			"field": "params.semikolon_contact_label",
+			"label": "Text für den Kontakt-Button",
+			"placeholder": "Projekt anfragen"
+		},
+		{
+			"field": "params.semikolon_linkedin_url",
+			"label": "LinkedIn-Profil (URL)",
+			"placeholder": "https://www.linkedin.com/in/..."
+		},
+		{
+			"field": "params.semikolon_imprint_url",
+			"label": "Impressum (URL oder Pfad)",
+			"placeholder": "/impressum/"
+		},
+		{
+			"field": "params.semikolon_privacy_url",
+			"label": "Datenschutzerklärung (URL oder Pfad)",
+			"placeholder": "/datenschutz/"
+		},
+		{
+			"field": "params.semikolon_hide_code_card",
+			"label": "Code-Steckbrief auf der Startseite ausblenden",
+			"type": "boolean"
+		},
+		{
+			"field": "params.semikolon_longreads_intro",
+			"label": "Einleitung der Longreads-Seite",
+			"type": "markdown"
+		}
+	]
+}

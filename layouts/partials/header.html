@@ -1,0 +1,35 @@
+{{- /*
+  Kontext: Page – oder dict "page" Page "current" URL.
+  Archiv/Fotos übergeben ihre URL, weil dort .RelPermalink auf "/" zeigt.
+*/ -}}
+{{- $page := . -}}
+{{- $forced := "" -}}
+{{- if reflect.IsMap . }}{{ $page = .page }}{{ $forced = .current }}{{ end -}}
+{{- $lr := partialCached "semikolon/longreads-page.html" $page "semikolon-lr" -}}
+{{- $isNote := and (in (slice "post" "reply") $page.Type) (eq $page.Title "") -}}
+{{- $isLongread := and (eq $page.Type "post") (ne $page.Title "") -}}
+{{- $homeCurrent := and (not $forced) (or $page.IsHome $isNote) -}}
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ "/" | relURL }}" rel="home">
+      {{- with site.Params.author.avatar }}<img class="brand-avatar" src="{{ . }}" alt="" width="32" height="32">{{ end -}}
+      <span class="brand-title">{{ site.Title }}</span><span class="brand-cursor" aria-hidden="true">_</span>
+    </a>
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="{{ "/" | relURL }}"{{ if $homeCurrent }} aria-current="page"{{ end }}>Notizen</a></li>
+        {{- range site.Menus.main }}
+        {{- $href := .URL -}}
+        {{- with .Page }}{{ with .Params.redirect }}{{ $href = . }}{{ end }}{{ end -}}
+        {{- $current := false -}}
+        {{- if $forced -}}
+          {{- $current = or (eq .URL $forced) (eq .URL ($forced | absURL)) -}}
+        {{- else -}}
+          {{- $current = or (eq .URL $page.RelPermalink) (and $isLongread (eq .URL $lr.url)) -}}
+        {{- end }}
+        <li><a href="{{ $href }}"{{ if $current }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  </div>
+</header>

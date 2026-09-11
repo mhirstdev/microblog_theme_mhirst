@@ -1,0 +1,12 @@
+<article class="lr-item h-entry">
+  <h3 class="lr-title"><a class="p-name u-url" href="{{ .Permalink }}">{{ .Title }}</a></h3>
+  <p class="lr-meta">
+    <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">{{ partial "semikolon/date.html" .Date }}</time>
+    <span>{{ .ReadingTime }} min Lesezeit</span>
+    {{- with .GetTerms "categories" }}
+    <span class="tags">{{ range . }}<a class="p-category" href="{{ .RelPermalink }}">#{{ .LinkTitle | lower }}</a>{{ end }}</span>
+    {{- end }}
+  </p>
+  <p class="lr-summary p-summary">{{ .Summary | plainify | htmlUnescape | truncate 220 }}</p>
+  <p class="lr-more"><a href="{{ .Permalink }}">Weiterlesen<span class="visually-hidden">: {{ .Title }}</span> <span class="lr-more-arrow" aria-hidden="true">→</span></a></p>
+</article>

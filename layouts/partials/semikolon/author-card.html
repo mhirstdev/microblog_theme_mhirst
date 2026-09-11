@@ -1,0 +1,16 @@
+{{- $p := site.Params -}}
+<div class="author-card p-author h-card">
+  {{- with $p.author.avatar }}
+  <img class="author-avatar u-photo" src="{{ . }}" alt="" width="56" height="56">
+  {{- end }}
+  <div class="author-body">
+    <p class="author-kicker">Geschrieben von</p>
+    <p class="author-name"><a class="p-name u-url" href="{{ "/" | absURL }}">{{ with $p.author.name }}{{ . }}{{ else }}{{ site.Title }}{{ end }}</a></p>
+    {{- with $p.semikolon_role }}
+    <p class="author-role">{{ . }}</p>
+    {{- end }}
+  </div>
+  {{- with $p.semikolon_contact_url }}
+  <a class="btn btn-primary btn-small" href="{{ . }}">{{ with $p.semikolon_contact_label }}{{ . }}{{ else }}Projekt anfragen{{ end }}</a>
+  {{- end }}
+</div>

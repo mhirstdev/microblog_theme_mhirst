@@ -1,0 +1,5 @@
+{{- if site.Params.include_conversation }}
+<section class="conversation" aria-label="Unterhaltung">
+  <script type="text/javascript" src="https://micro.blog/conversation.js?url={{ .Permalink }}"></script>
+</section>
+{{- end }}

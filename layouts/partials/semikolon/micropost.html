@@ -1,0 +1,10 @@
+<article class="note h-entry">
+  {{ partial "semikolon/note-meta.html" . }}
+  {{- with .Params.reply_to_url }}
+  <p class="reply-to"><span aria-hidden="true">↪</span> Antwort an <a class="u-in-reply-to" href="{{ . }}">{{ if eq $.Params.reply_to_hostname "micro.blog" }}@{{ $.Params.reply_to_username }}{{ else }}{{ $.Params.reply_to_hostname }}{{ end }}</a></p>
+  {{- end }}
+  <div class="e-content note-content">
+    {{ .Content }}
+  </div>
+  {{ if templates.Exists "partials/microblog_syndication.html" }}{{ partial "microblog_syndication.html" . }}{{ end }}
+</article>

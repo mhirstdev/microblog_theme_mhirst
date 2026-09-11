@@ -1,0 +1,17 @@
+{{ define "title" }}Antworten · {{ site.Title }}{{ end }}
+{{ define "main" }}
+{{- $replies := (where site.RegularPages "Type" "reply").ByDate.Reverse -}}
+<section class="list-page">
+  <header class="page-head">
+    <p class="section-label"><span aria-hidden="true">//</span> Unterhaltungen</p>
+    <h1 class="page-title">Antworten</h1>
+  </header>
+  {{- if site.Params.paginate_replies }}
+  {{- $pag := .Paginate $replies }}
+  {{ partial "semikolon/mixed-list.html" $pag.Pages }}
+  {{ partial "semikolon/pagination.html" $pag }}
+  {{- else }}
+  {{ partial "semikolon/mixed-list.html" (first 25 $replies) }}
+  {{- end }}
+</section>
+{{ end }}
