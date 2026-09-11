@@ -1,0 +1,24 @@
+{{- /*
+  Liefert die bsky.app-URL eines Posts oder "".
+  Micro.blog speichert Bluesky-Crossposts und -Importe als AT-URI:
+  at://<did>/app.bsky.feed.post/<rkey>  ->  https://bsky.app/profile/<did>/post/<rkey>
+*/ -}}
+{{- $web := "" -}}
+{{- with .Params.bluesky -}}
+  {{- if reflect.IsMap . -}}
+    {{- with index . "url" -}}
+      {{- $u := printf "%v" . -}}
+      {{- if hasPrefix $u "https://" -}}
+        {{- $web = $u -}}
+      {{- else if hasPrefix $u "at://" -}}
+        {{- $parts := split (strings.TrimPrefix "at://" $u) "/" -}}
+        {{- if eq (len $parts) 3 -}}
+          {{- if eq (index $parts 1) "app.bsky.feed.post" -}}
+            {{- $web = printf "https://bsky.app/profile/%s/post/%s" (index $parts 0) (index $parts 2) -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $web -}}

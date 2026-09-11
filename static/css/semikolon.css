@@ -447,6 +447,11 @@ hr { margin: 2rem 0; border: 0; border-top: 1px dashed var(--line-strong); }
 
 .reply-to { margin: 0 0 .35rem; color: var(--muted); font: 400 .8rem/1.4 var(--font-mono); }
 
+.bluesky-link { margin: .9rem 0 0; font: 500 .85rem/1.4 var(--font-mono); }
+.bluesky-link a { text-decoration: none; }
+.bluesky-link a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.longread-footer .bluesky-link { margin: 0 0 1rem; }
+
 .single-note { margin: 3rem 0 1rem; }
 .single-note .note {
   padding: 1.25rem 1.4rem;

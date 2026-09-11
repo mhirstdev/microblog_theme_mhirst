@@ -5,6 +5,7 @@
 <div class="single-note">
   {{ partial "semikolon/micropost.html" . }}
 </div>
+{{ partial "semikolon/bluesky-link.html" . }}
 {{ partial "semikolon/conversation.html" . }}
 <p class="back-link"><a href="{{ "/" | relURL }}">← Alle Notizen</a></p>
 {{- end }}

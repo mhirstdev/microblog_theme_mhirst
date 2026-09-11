@@ -6,5 +6,7 @@
   <div class="e-content note-content">
     {{ .Content }}
   </div>
-  {{ if templates.Exists "partials/microblog_syndication.html" }}{{ partial "microblog_syndication.html" . }}{{ end }}
+  {{- with partial "semikolon/bluesky-url.html" . }}
+  <data class="u-syndication" value="{{ . }}"></data>
+  {{- end }}
 </article>
